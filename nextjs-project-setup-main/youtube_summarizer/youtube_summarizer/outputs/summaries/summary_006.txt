@@ -1,0 +1,4 @@
+CHUNK 6 SUMMARY
+==============================
+
+Right click on the source folder and get a new class and this is just our. Java file well name our Java file like learn. Java hit this first check mark public static void main and then hit finish and we get some code looking stuff pop up.

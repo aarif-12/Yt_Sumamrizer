@@ -1,0 +1,6 @@
+CHUNK 8
+====================
+
+ Java which is pretty sweet let's go on to non primitive types of storing data because storing data is super cool if we wanted to change our user name say on. Instagram it's got. [0:03:45]
+
+a store at somehow right so to store like a name like a bunch of character variables that would be called string with a capital. S there donate like in string name and set that equal to.

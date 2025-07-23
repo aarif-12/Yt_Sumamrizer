@@ -1,0 +1,4 @@
+CHUNK 17
+====================
+
+ I'll just right click source again make a new class we'll call it like animal and hit finish. I'll make a method just like we did before say like. I am dog and all it does is return. I am a dog if we want to use the. I am dog method we can just.

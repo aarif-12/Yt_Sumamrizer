@@ -1,0 +1,4 @@
+CHUNK 11 SUMMARY
+==============================
+
+Java in will most likely have like a little box here and you can scroll through it and this is everything you can do to that variable so one. Java because it tells you everything that that variable can do for you.

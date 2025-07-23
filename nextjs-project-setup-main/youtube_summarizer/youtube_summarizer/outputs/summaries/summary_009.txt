@@ -1,0 +1,4 @@
+CHUNK 9 SUMMARY
+==============================
+
+Java parse it which just means go through and make sense of it all so that's why these weird little semicolons exist so now the name. Susan is stored into name but notice how this isn't turning purple it's not a primitive type if it'sNot turning purple that probably means it's an object.

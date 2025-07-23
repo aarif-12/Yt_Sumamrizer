@@ -1,0 +1,4 @@
+CHUNK 22 SUMMARY
+==============================
+
+If-else statements are super useful you can repeat code by doing a for loop. A for loop format has the keyword for some parenthesis and then a format that kind of looks like this in simple terms. This will repeat the code inside of here 5 times. changing this number 8 it will run this code eight times. If a is less than 50 print high and then increment a by one each time that's what plus plus means.

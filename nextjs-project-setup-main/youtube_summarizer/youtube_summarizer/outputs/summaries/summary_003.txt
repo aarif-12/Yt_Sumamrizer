@@ -1,0 +1,4 @@
+CHUNK 3 SUMMARY
+==============================
+
+This is everything you need to know about Java in 13 minutes. I want to try to help you out wherever you are in your life with programming and hopefully you find this video helpful.

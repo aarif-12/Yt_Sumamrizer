@@ -1,0 +1,6 @@
+CHUNK 24
+====================
+
+ [0:13:45]
+
+else like. Google. YouTube. Instagram. Twitter most software companies have API's that you can use and bring inside your program and do cool stuff until you someone else's. API you pretty much go to their website download this jar file you would right click on your project go to properties go to. Java build path add external jars pop in the jar that you just downloaded say like.

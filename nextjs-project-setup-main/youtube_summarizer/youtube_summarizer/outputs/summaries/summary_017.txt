@@ -1,0 +1,4 @@
+CHUNK 17 SUMMARY
+==============================
+
+Right click source again make a new class we'll call it like animal and hit finish. I'll make a method just like we did before say like. I am dog and all it does is return.

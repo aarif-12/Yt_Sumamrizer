@@ -1,0 +1,4 @@
+CHUNK 23
+====================
+
+ I'll stop some other good logic ones are try catch so the keyword try and then catch it'll try to run the code inside of here if something goes wrong an exception is thrown exception means just something went wrong with your program and if something went wrong with your program then the code inside of here will get run let's use other people's code and methods inside of ours we can do that through an. API an. API is pretty much just a long list of methods that you can use that were made from someone.

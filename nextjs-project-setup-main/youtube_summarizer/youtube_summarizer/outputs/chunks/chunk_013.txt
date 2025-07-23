@@ -1,0 +1,4 @@
+CHUNK 13
+====================
+
+ I'm just gonna control. S or command s to save it then we're going to run it and then in your console window it might be called console might be called something else but in a window you should see your name to uppercase if. I want to see something else we can just delete.

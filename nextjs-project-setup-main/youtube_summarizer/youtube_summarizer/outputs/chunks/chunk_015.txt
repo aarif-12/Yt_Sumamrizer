@@ -1,0 +1,6 @@
+CHUNK 15
+====================
+
+ [0:07:30]
+
+a plus sign so in the parentheses we'll just type s which is the name of the string plus and exclamation mark inside of double quotes since characters and strings anything that's not a number or a variable name has to be in quotation marks statements end in a semicolon we'll save it and run it and nothing happens because we're not calling the method so we'll just type the name of the method and then something like hotdogs now we can save it and run it and we see hot dogs with the next formation mark this right here goes here and whatever's inside of these curly braces gets rough you can also return the results as a variable so we can say return which is another keyword s plus the exclamation mark you get a red underline because this keyword void is actually the type of what you want to bring back so we just want to do a string and now we can say a string exclaim is equal to what's returned from add exclamation point it's stored in here but let's print it out and it does the same thing remember. I said the dot could bring up a bunch of methods that you could use well you can also call them without a.

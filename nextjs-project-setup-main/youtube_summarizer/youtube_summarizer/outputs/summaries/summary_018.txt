@@ -1,0 +1,4 @@
+CHUNK 18 SUMMARY
+==============================
+
+You can just make an animal object like this animal a equals new animal anytime you're making an object it's gonna have this format. There are a million types of objects out there you can use but now we can just say a dot and it brings up what that object can do.

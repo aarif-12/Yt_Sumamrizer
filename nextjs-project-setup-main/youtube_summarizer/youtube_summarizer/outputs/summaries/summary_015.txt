@@ -1,0 +1,4 @@
+CHUNK 15 SUMMARY
+==============================
+
+Since characters and strings anything that's not a number or a variable name has to be in quotation marks statements end in a semicolon we'll save it and run it. Nothing happens because we're not calling the method so we'll just type the name of the method.

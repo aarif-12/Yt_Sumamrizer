@@ -1,0 +1,8 @@
+CHUNK 22
+====================
+
+ [0:11:15]
+
+an if statement you would have a condition in here today like true and then it would run the code inside of here this is useful if you have something like a is equal to 5 if a to equal signs if a is equal to zero then run this code you tack on another one otherwise if a is equal to one then we want to run this code otherwise if it's something else completely then run this code if-else statements are super useful you can repeat code by doing a for loop and a for loop format has the keyword for some parenthesis and then a format that kind of looks like this in simple terms this will repeat the code inside of here 5 times you can change it changing this number 8 it will run this code eight times we can put a for loop inside of a for loop which makes it really interesting just got to change this variable now whatever is in here will be run sixty-four times because it loops eight times and then another eight times inside you can repeat code until a certain condition is met by typing the keyword while parentheses curly braces say like wow a is equal to five you can print it out hi. [0:12:30]
+
+actually let's see well a is less than 50 print high and then increment a by one each time that's what plus plus means let's just call do stuff so we can see what's going on go into the main method whatever is in the main method will get run when you click run so we'll just make our animal again say a and that a period to bring out what we can do and now we can see our do stuff method if we run it we'll see high print out a lot and then it'll stop until it gets to 49 because it start at five go up six seven eight nine all the way up until 50 and.

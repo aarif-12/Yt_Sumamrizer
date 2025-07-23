@@ -1,0 +1,4 @@
+CHUNK 12 SUMMARY
+==============================
+
+There's this great piece of code to print out so you can see things it's called system dot out dot print line and then some parentheses. We're pretty much just taking this and sticking it inside of the parentheses of this code this just puts it on the screen for us so.

@@ -1,0 +1,4 @@
+CHUNK 18
+====================
+
+ I'm just gonna save it go in here. I'll delete this code for now to call. I am dog you can just make an animal object like this animal a equals new animal anytime you're making an object it's gonna have this format and there are a million types of objects out there you can use but now we can just say a dot and it brings up what that object can do and look. I am dog is here.

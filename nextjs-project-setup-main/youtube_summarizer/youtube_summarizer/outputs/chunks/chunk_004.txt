@@ -1,0 +1,6 @@
+CHUNK 4
+====================
+
+ Java on this channel if you're new here. I make a. Java tutorial just like this one every single week so if you're new here and consider subscribing computer's only understand zeros and ones which makes it kind of difficult for a human so to solve this what we did is we made programming languages which are just a bunch. [0:01:15]
+
+of key words and symbols that help us program a computer the one we're learning today is obviously. Java and here's everything you need to know about. Java to start getting started well you see on the screen now is a programming environment this is where you write code you can read code in notepad or on a piece of paper but none of those ways has a way to compile your code which means turn it into zeros and ones there are a bunch of tutorials on how to install eclipse this is the program eclipse or.

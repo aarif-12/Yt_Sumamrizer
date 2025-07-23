@@ -1,0 +1,4 @@
+CHUNK 6
+====================
+
+ Java so. I'm just going to go to file new. Java project type of the project name like. Java - for real epicness hit finish next expand that up right click on the source folder and get a new class and this is just our. Java file well name our. Java file like learn. Java hit this first check mark public static void main and then hit finish and we get some code looking stuff pop up on the screen so like.

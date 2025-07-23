@@ -1,0 +1,6 @@
+CHUNK 7
+====================
+
+ I. [0:02:30]
+
+said a programming language is just a bunch of key words and symbols and it looks like this. Java file already has some keywords cymbals in here for us a super useful thing we can do in. Java is stored data so you can store say a number variable in. Java by doing this it's a equals say five this takes the value of five and stores it into a you'll notice this keyword int that stands for integer and there are a bunch of other ones like it's going to list a few so here's a few more this one called char long and double char stands for character so this is how you would store a character variable you would just put your character inside of single quotes and that would be stored in 2b and get a few others like long double and there are a bunch more these are called primitive types since they turn purple like how primates are before humans the not the word primary means number one primitive just means it was here before it's built into.

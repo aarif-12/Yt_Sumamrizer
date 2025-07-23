@@ -1,0 +1,4 @@
+CHUNK 20 SUMMARY
+==============================
+
+A lot of objects will not come in your code you have to bring them in. Java is referred to as oo. P which is object oriented programming each class represents an object which has its own methods.

@@ -1,0 +1,4 @@
+CHUNK 12
+====================
+
+ I like to pick right now would be like to uppercase so. I can just double click on it or you could type it out and then semicolon since it's not opening a bracket well how do we see this working there's this great piece of code to print out so you can see things it's called system dot out dot print line and then some parentheses we're pretty much just taking this and sticking it inside of the parentheses of this code this just puts it on the screen for us so.

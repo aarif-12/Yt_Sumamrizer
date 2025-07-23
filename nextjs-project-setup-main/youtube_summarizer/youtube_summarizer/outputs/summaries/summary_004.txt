@@ -1,0 +1,4 @@
+CHUNK 4 SUMMARY
+==============================
+
+Programming languages are just a bunch. [0:01:15] of key words and symbols that help us program a computer the one we're learning today is obviously. Java.

@@ -1,0 +1,4 @@
+CHUNK 7 SUMMARY
+==============================
+
+A programming language is just a bunch of key words and symbols and it looks like this. Java file already has some keywords cymbals in here for us a super useful thing we can do in. Java is stored data.

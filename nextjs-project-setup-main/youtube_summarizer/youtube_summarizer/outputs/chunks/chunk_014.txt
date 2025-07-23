@@ -1,0 +1,6 @@
+CHUNK 14
+====================
+
+ [0:06:15]
+
+this do the dot again to bring up what it can do and there's one call to lowercase save it again run it again and now it's all to lowercase this to lowercase has some parentheses here and this putting text to the console window code has some parentheses here too and anything that has parentheses like this is 99% of the time gonna be a method and methods are amazing they're the bomb cuz they just do things for you like like what we did now so let's make a method that puts an exclamation mark say at the end of whatever string you want to start a method just write some keywords we're gonna write the keyword it's public static void don't worry too much about this right now they're just keywords and every keyword has its own purpose we'll name it like add. X Kwame ssin points parentheses it's a string s in here and then some curly braces to finish it off. I'm just gonna delete these right now because it might look a little confusing all this method is going to do is add an exclamation point to the end so we can just print out to the screen out like we did before that's super useful to put two strings together use.

@@ -1,0 +1,4 @@
+CHUNK 14 SUMMARY
+==============================
+
+Method is a method that puts an exclamation mark say at the end of whatever string you want to start a method just write some keywords we're gonna write the keyword it's public static void don't worry too much about this right now they're just keywords and every keyword has its own purpose we'll name it like add. X Kwame ssin points parentheses it's a string s in here and then some curly braces to finish off.

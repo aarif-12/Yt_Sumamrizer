@@ -1,0 +1,4 @@
+CHUNK 9
+====================
+
+ Susan and then put a semicolon at the end most statements will end in a semicolon by the way these don't for their own reasons but if it doesn't have some sort of parentheses at the end put a semicolon there all these symbols help. Java parse it which just means go through and make sense of it all so that's why these weird little semicolons exist so now the name. Susan is stored into name but notice how this isn't turning purple it's not a primitive type if it's not turning purple that probably means it's an object and you can do so many things with objects it's crazy to do crazy things with your object we can just type the name of the string and in this case it's name so we'll just type name you'll see red underlines pop-up don't worry about it

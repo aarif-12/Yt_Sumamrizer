@@ -1,0 +1,6 @@
+CHUNK 20
+====================
+
+ [0:10:00]
+
+objects our. ArrayList has the same more format as before but you gotta put these little angle brackets but a lot of objects will not come in your code you have to bring them in so usually what you'll do is hover over it and you'll see an import click the import suggestion and that'll generate this import keyword followed by like a path to the. ArrayList code this just means bring the. ArrayList into our program so we can use it an. ArrayList you can do things like add can add a bunch of items like this is how they store movies or a store a list of users you can replace stet and all sorts of things so objects and methods are super powerful each object has its own methods and that's why. Java is referred to as oo. P which is object oriented programming each class represents an object which has its own methods like this one says.
