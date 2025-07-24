@@ -5,7 +5,7 @@ transformers>=4.35.0
 torch>=2.0.0
 youtube-transcript-api>=0.6.0
 
-# NLP & Embeddings
+# NLP & embeddings
 nltk>=3.8.1
 spacy>=3.7.0
 sentence-transformers>=2.2.2
@@ -18,13 +18,13 @@ python-dotenv>=1.0.0
 requests>=2.31.0
 beautifulsoup4>=4.12.0
 pyyaml>=6.0.1
-pathlib2>=2.3.7  # pathlib built-in for Python 3.4+, but added pathlib2 for compatibility
+pathlib
 
-# Optional: Audio / Whisper fallback
+# Optional: Audio/Whisper fallback
 openai-whisper>=20231117
 librosa>=0.10.0
 soundfile>=0.12.0
 
-# Optional: PDF Export
+# Optional: PDF export
 reportlab>=4.0.0
 fpdf2>=2.7.0
