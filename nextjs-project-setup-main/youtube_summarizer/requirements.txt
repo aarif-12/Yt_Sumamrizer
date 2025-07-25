@@ -5,6 +5,13 @@ transformers>=4.35.0
 torch>=2.0.0
 youtube-transcript-api>=0.6.0
 
+streamlit
+yt-dlp
+openai-whisper
+youtube-transcript-api
+ffmpeg-python
+
+
 # NLP & embeddings
 nltk>=3.8.1
 spacy>=3.7.0
