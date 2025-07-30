@@ -13,7 +13,7 @@ from typing import Optional
 from pathlib import Path
 import urllib3
 
-# Disable warnings and set HTTP fallback (useful for Streamlit Cloud)
+# Disable SSL warnings (for Streamlit Cloud)
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 os.environ["YOUTUBE_TRANSCRIPT_API_FORCE_HTTP"] = "1"
 
@@ -48,6 +48,7 @@ def extract_video_id(url: str) -> Optional[str]:
 
 
 def fetch_transcript_api(video_id: str) -> Optional[str]:
+    import traceback
     if not YouTubeTranscriptApi:
         logger.warning("youtube-transcript-api not installed.")
         return None
@@ -56,108 +57,117 @@ def fetch_transcript_api(video_id: str) -> Optional[str]:
         languages = ['en', 'en-US', 'en-GB']
         transcript_list = YouTubeTranscriptApi.list_transcripts(video_id)
 
-        logger.info(f"Transcript options available: {[t.language_code for t in transcript_list]}")
+        logger.info(f"Transcript options: {[t.language_code for t in transcript_list]}")
 
-        # Manual transcripts
         for lang in languages:
             try:
                 transcript = transcript_list.find_manually_created_transcript([lang])
                 data = transcript.fetch()
                 return TextFormatter().format_transcript(data)
             except Exception as e:
-                logger.debug(f"No manual transcript for {lang}: {e}")
+                logger.warning(f"Manual transcript not found for lang {lang}: {e}")
 
-        # Auto-generated transcripts
         for lang in languages:
             try:
                 transcript = transcript_list.find_generated_transcript([lang])
                 data = transcript.fetch()
                 return TextFormatter().format_transcript(data)
             except Exception as e:
-                logger.debug(f"No auto transcript for {lang}: {e}")
+                logger.warning(f"Generated transcript not found for lang {lang}: {e}")
 
-        return None
     except Exception as e:
-        logger.error(f"[Transcript API] Error: {e}")
-        return None
+        logger.error(f"[YouTubeTranscriptApi] Error: {e}")
+        logger.error(traceback.format_exc())
+    return None
 
 
 def fetch_transcript_whisper(video_url: str) -> Optional[str]:
+    import traceback
+    import torch
     if not whisper or not yt_dlp:
         logger.warning("Whisper or yt-dlp not available.")
         return None
 
     try:
-        temp_dir = Path("youtube_summarizer/temp")
+        temp_dir = Path("temp_audio")
         temp_dir.mkdir(exist_ok=True)
+
+        output_path = temp_dir / "audio.%(ext)s"
 
         ydl_opts = {
             'format': 'bestaudio/best',
-            'outtmpl': str(temp_dir / '%(title)s.%(ext)s'),
-            'extractaudio': True,
-            'audioformat': 'wav',
+            'outtmpl': str(output_path),
+            'postprocessors': [{
+                'key': 'FFmpegExtractAudio',
+                'preferredcodec': 'mp3',
+                'preferredquality': '192',
+            }],
             'quiet': True,
+            'no_warnings': True,
+            'ignoreerrors': False,
+            'noplaylist': True,
         }
 
+        logger.info("📥 Downloading audio using yt_dlp...")
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-            info = ydl.extract_info(video_url, download=True)
-            audio_file = ydl.prepare_filename(info)
-            if not audio_file.endswith('.wav'):
-                audio_file = audio_file.rsplit('.', 1)[0] + '.wav'
+            ydl.download([video_url])
 
-        logger.info("Loading Whisper model...")
-        model = whisper.load_model("base")
+        audio_file = temp_dir / "audio.mp3"
+        if not audio_file.exists():
+            logger.error("❌ Audio file not created at expected path: %s", audio_file)
+            return None
+        else:
+            logger.info("✅ Audio file created at: %s", audio_file)
 
-        logger.info("Transcribing audio...")
-        result = model.transcribe(audio_file)
+        device = "cuda" if torch.cuda.is_available() else "cpu"
+        logger.info(f"🎧 Loading Whisper model on device: {device}...")
+        model = whisper.load_model("base", device=device)  # Consider 'tiny' if RAM is tight
 
-        try:
-            os.remove(audio_file)
-        except:
-            pass
+        logger.info("🎧 Transcribing audio with Whisper...")
+        result = model.transcribe(str(audio_file))
+        logger.info("✅ Whisper transcription result keys: %s", list(result.keys()) if result else "None")
+        logger.info("✅ Whisper transcription text length: %d", len(result.get("text", "")) if result and "text" in result else 0)
 
-        return result["text"]
+        audio_file.unlink(missing_ok=True)  # Clean up
+        return result.get("text") if result else None
 
     except Exception as e:
-        logger.error(f"[Whisper] Error: {e}")
+        logger.error(f"[Whisper] Transcription error: {e}")
+        logger.error(traceback.format_exc())
         return None
 
 
 def fetch_transcript(video_url: str) -> str:
+    import traceback
     logger.info(f"🔎 Fetching transcript for: {video_url}")
     video_id = extract_video_id(video_url)
     if not video_id:
-        raise ValueError("Invalid YouTube URL: Could not extract video ID")
+        raise ValueError("❌ Invalid YouTube URL: Could not extract video ID")
 
     logger.info(f"🎯 Video ID: {video_id}")
 
-    # Try YouTube API
     transcript = fetch_transcript_api(video_id)
     if transcript:
-        logger.info("✅ Transcript fetched via YouTube API")
+        logger.info("✅ Fetched via YouTubeTranscriptApi")
         return transcript
 
-    # Whisper fallback
-    logger.warning("⚠️ YouTube API failed. Trying Whisper fallback...")
+    logger.warning("⚠️ Falling back to Whisper method...")
     transcript = fetch_transcript_whisper(video_url)
     if transcript:
-        logger.info("✅ Transcript fetched via Whisper fallback")
+        logger.info("✅ Fetched via Whisper")
         return transcript
 
-    raise ValueError(
-        "❌ Could not fetch transcript using any method. "
-        "Please check if the video has captions available or try uploading a transcript manually."
-    )
+    logger.error("❌ Could not fetch transcript using any method for video: %s", video_url)
+    logger.error(traceback.format_exc())
+    raise ValueError("❌ Could not fetch transcript using any method. Ensure the video has captions or allow audio processing.")
 
 
 def validate_transcript(transcript: str) -> bool:
     if not transcript or len(transcript.strip()) < 100:
         return False
-
     words = transcript.split()
     if len(words) < 50:
         return False
-
     unique_chars = len(set(transcript.lower().replace(' ', '')))
     return unique_chars >= 10
 
@@ -167,7 +177,7 @@ if __name__ == "__main__":
     try:
         transcript = fetch_transcript(test_url)
         print(f"Transcript length: {len(transcript)} characters")
-        print(f"First 200 characters: {transcript[:200]}...")
+        print(f"First 200 chars:\n{transcript[:200]}")
         print("✅ Valid" if validate_transcript(transcript) else "❌ Invalid")
     except Exception as e:
         print(f"❌ Error: {e}")
