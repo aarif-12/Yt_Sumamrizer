@@ -3,10 +3,11 @@ import os
 from pathlib import Path
 import sys
 
+
 # Add src to path for imports
 sys.path.append(str(Path(__file__).parent / "src"))
 
-from src.fetcher import fetch_transcript
+from src.fetcher import extract_video_id, fetch_transcript
 from src.cleaner import clean_transcript
 from src.splitter import split_into_chunks
 from src.summarizer import summarize_chunks_batch
@@ -23,62 +24,128 @@ st.set_page_config(
 # Custom CSS for Merlin AI-like styling
 st.markdown("""
 <style>
-  /* ========== LIGHT THEME (Google‑Style) VARIABLES & RESET ========== */
-  @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
-  :root {
-    --font-family: 'Roboto', sans-serif;
-    --fs-base: 16px;
-
-    --color-bg: #ffffff;                /* pure white background */
-    --color-panel: #f1f3f4;             /* light “card” gray */
-    --color-text: #202124;              /* almost‑black text */
-    --color-text-secondary: #5f6368;    /* secondary gray text */
-    --color-primary: #1a73e8;           /* Google blue */
-    --color-primary-hover: #1669c1;     /* darker on hover */
-    --color-accent: #34a853;            /* Google green accent */
-    --radius: 0.375rem;                 /* subtle rounding */
-    --transition: 0.2s ease-in-out;
-
-    --shadow-sm: 0 1px 2px rgba(60,64,67,0.10);
-    --shadow-md: 0 2px 4px rgba(60,64,67,0.15);
-    --shadow-lg: 0 4px 8px rgba(60,64,67,0.20);
-  }
-
+  /* GLOBAL RESET */
   *, *::before, *::after {
     box-sizing: border-box;
-    margin: 0; padding: 0;
+    margin: 0;
+    padding: 0;
   }
+
   body {
-    background-color: var(--color-bg);
+    background-color: #0a66c2;
     color: var(--color-text);
     font-family: var(--font-family);
     font-size: var(--fs-base);
     line-height: 1.5;
   }
 
-  /* ========== HEADER & SUBTITLE ========== */
+  .main {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 1rem;
+  }
+
+  h1, h2, h3 {
+    color: #0a66c2;
+  }
+
+
+
+
+  /* BUTTON STYLING */
+  .stButton>button,
+  .btn, button {
+    background-color: #0a66c2;
+    color: white;
+    border-radius: 6px;
+    padding: 8px 16px;
+    border: none;
+    font-weight: bold;
+    box-shadow: var(--shadow-sm);
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .stButton>button:hover,
+  .btn:hover, button:hover {
+    background-color: #004182;
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+  }
+
+  /* INPUT STYLING */
+  .stTextInput>div>div>input,
+  input[type="text"] {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid #0a66c2;
+    border-radius: 6px;
+    background-color: #fff;
+    color: var(--color-text);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .stTextInput>div>div>input:focus,
+  input[type="text"]:focus {
+    border-color: #004182;
+    box-shadow: 0 0 0 3px rgba(10,102,194,0.3);
+    outline: none;
+  }
+
+  input[type="text"]::placeholder {
+    color: var(--color-text-secondary);
+  }
+
+  /* REMOVE RED FOCUS RING */
+  input:focus,
+  textarea:focus,
+  select:focus {
+    outline: none !important;
+    box-shadow: 0 0 0 3px rgba(10,102,194,0.3) !important;
+    border-color: #004182 !important;
+  }
+    
+
+  /* URL Column Styling */
+  a.url-link {
+    color: #0a66c2;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease, text-decoration 0.2s ease;
+  }
+
+  a.url-link:hover,
+  a.url-link:active,
+  a.url-link:focus {
+    text-decoration: underline;
+    color: #004182;
+  }
+
+  /* HEADER & SUBTITLE */
   .main-header {
     font-size: 2.5rem;
     font-weight: 700;
     text-align: center;
     margin: 2.5rem 1rem 0.75rem;
-    color: var(--color-text);
+    color: #0a66c2;
     position: relative;
     padding-bottom: 0.5rem;
   }
+
   .main-header::after {
     content: '';
     display: block;
     width: 60px;
     height: 4px;
     margin: 0.5rem auto 0;
-    background-color: var(--color-primary);
+    background-color: #0a66c2;
     border-radius: var(--radius);
-    transition: width var(--transition), background-color var(--transition);
+    transition: width 0.3s ease, background-color 0.3s ease;
   }
+
   .main-header:hover::after {
     width: 100px;
-    background-color: var(--color-primary-hover);
+    background-color: #004182;
   }
 
   .subtitle {
@@ -90,7 +157,7 @@ st.markdown("""
     letter-spacing: 0.02em;
   }
 
-  /* ========== PANELS (CARDS) ========== */
+  /* PANELS / CARDS */
   .panel {
     background-color: var(--color-panel);
     border-radius: var(--radius);
@@ -98,29 +165,31 @@ st.markdown("""
     margin: 1.5rem auto;
     max-width: 800px;
     box-shadow: var(--shadow-sm);
-    transition: box-shadow var(--transition), transform var(--transition);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
   }
+
   .panel:hover {
     box-shadow: var(--shadow-md);
     transform: translateY(-2px);
   }
 
-  /* ========== STEP HEADERS ========== */
+  /* STEP HEADERS */
   .step-header {
     font-size: 1.375rem;
     font-weight: 500;
-    color: var(--color-primary);
+    color: #0a66c2;
     margin: 2rem 0 0.75rem;
     padding-bottom: 0.25rem;
-    border-bottom: 2px solid var(--color-panel);
-    transition: border-color var(--transition), color var(--transition);
-  }
-  .step-header:hover {
-    color: var(--color-primary-hover);
-    border-color: var(--color-primary-hover);
+    border-bottom: 2px solid #0a66c2;
+    transition: border-color 0.3s ease, color 0.3s ease;
   }
 
-  /* ========== INFO BOXES ========== */
+  .step-header:hover {
+    color: #004182;
+    border-color: #004182;
+  }
+
+  /* INFO BOXES */
   .box {
     background-color: var(--color-panel);
     border-left: 4px solid var(--color-accent);
@@ -128,74 +197,42 @@ st.markdown("""
     padding: 1rem 1.25rem;
     margin: 1rem 0;
     box-shadow: var(--shadow-sm);
-    transition: box-shadow var(--transition);
+    transition: box-shadow 0.3s ease;
   }
+
   .box:hover {
     box-shadow: var(--shadow-md);
   }
+
   .box p {
     color: var(--color-text-secondary);
     margin-top: 0.5rem;
   }
 
-  /* ========== INPUTS & BUTTONS ========== */
-  input[type="text"] {
-    width: 100%;
-    padding: 0.75rem 1rem;
-    border: 1px solid #dadce0;
-    border-radius: var(--radius);
-    background-color: #fff;
-    color: var(--color-text);
-    transition: border-color var(--transition), box-shadow var(--transition);
-  }
-  input[type="text"]::placeholder {
-    color: var(--color-text-secondary);
-  }
-  input[type="text"]:focus {
-    border-color: var(--color-primary);
-    box-shadow: 0 0 0 3px rgba(26,115,232,0.2);
-    outline: none;
-  }
-
-  .btn, button {
-    display: inline-block;
-    background-color: var(--color-primary);
-    color: #fff;
-    padding: 0.6rem 1.2rem;
-    font-size: 1rem;
-    font-weight: 500;
-    border: none;
-    border-radius: var(--radius);
-    cursor: pointer;
-    box-shadow: var(--shadow-sm);
-    transition: background-color var(--transition), transform var(--transition), box-shadow var(--transition);
-  }
-  .btn:hover, button:hover {
-    background-color: var(--color-primary-hover);
-    transform: translateY(-1px);
-    box-shadow: var(--shadow-md);
-  }
-
-  /* ========== LOADER ========== */
+  /* LOADER */
   .loader {
     margin: 2rem auto;
     width: 48px;
     height: 48px;
     border: 5px solid #e0e0e0;
-    border-top: 5px solid var(--color-primary);
+    border-top: 5px solid #0a66c2;
     border-radius: 50%;
     animation: spin 0.8s linear infinite;
   }
+
   @keyframes spin {
     to { transform: rotate(360deg); }
   }
-</style>
+</>
+
 
 """, unsafe_allow_html=True)
 
+
+
 def main():
     # Header
-    st.markdown('<h1 class="main-header">🎬 Merlin AI Video Assistant</h1>', unsafe_allow_html=True)
+    st.markdown('<h1 class="main-header">🎬 Aarifs AI Video Assistant</h1>', unsafe_allow_html=True)
     st.markdown('<p class="subtitle">Transform YouTube videos into structured, comprehensive summaries</p>', unsafe_allow_html=True)
     
     # Sidebar for configuration
@@ -237,6 +274,28 @@ def main():
             placeholder="https://www.youtube.com/watch?v=...",
             help="Enter a valid YouTube video URL"
         )
+        if video_url:
+            vid = extract_video_id(video_url)
+            if vid:
+                st.markdown('<h3 class="step-header">▶️ Video Preview</h3>', unsafe_allow_html=True)
+                video_width =750 #djust to 300 if you want even smaller
+                video_height = int(video_width * 9 / 16)
+
+                st.markdown(
+            f'''
+            <div style="text-align:center; border-radius:15px;">
+                <iframe width="{video_width}" height="{video_height}"
+                src="https://www.youtube.com/embed/{vid}"
+                frameborder="1px"
+                allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen>
+                </iframe>
+            </div>
+            ''',
+            unsafe_allow_html=True
+        )
+            else:
+                st.warning("⚠️ Unable to extract video ID for preview.")
         
         # Optional transcript upload
         st.subheader("Or upload existing transcript")
@@ -245,6 +304,7 @@ def main():
             type=['txt'],
             help="Upload a pre-existing transcript file to skip the extraction step"
         )
+        
         
         # Process button
         if st.button("🚀 Start Analysis", type="primary", use_container_width=True):
@@ -272,6 +332,7 @@ def process_video(url, uploaded_file, model, chunk_size, min_len, max_len, save_
     progress_bar = st.progress(0)
     status_text = st.empty()
     
+    import traceback
     try:
         # Step 1: Fetch transcript
         status_text.text("🔍 Fetching transcript...")
@@ -281,8 +342,14 @@ def process_video(url, uploaded_file, model, chunk_size, min_len, max_len, save_
             raw_transcript = uploaded_file.read().decode('utf-8')
             st.success("✅ Transcript uploaded successfully")
         else:
-            raw_transcript = fetch_transcript(url)
-            st.success("✅ Transcript fetched successfully")
+            try:
+                raw_transcript = fetch_transcript(url)
+                st.success("✅ Transcript fetched successfully")
+            except Exception as e:
+                st.error(f"❌ Error fetching transcript: {str(e)}")
+                st.error("Please ensure the video has captions or allow audio processing.")
+                st.exception(e)
+                return
         
         # Step 2: Clean transcript
         status_text.text("🧹 Cleaning transcript...")
@@ -350,7 +417,7 @@ def display_results(final_summary, transcript_path):
             st.write(f"**{i}.** {insight}")
     
     with tab3:
-        st.subheader("Frequently Asked Questions")
+        st.subheader("Flash cards")
         faqs = final_summary.get("faqs", [])
         for faq in faqs:
             with st.expander(faq.get("question", "Question")):
