@@ -233,9 +233,3 @@ For issues, questions, or contributions:
 2. Review the project structure and code comments
 3. Test with different videos and settings
 4. Ensure all dependencies are properly installed
-
----
-
-**Built with ❤️ for the AI community**
-
-*Transform any YouTube video into actionable insights with the power of offline AI.*
