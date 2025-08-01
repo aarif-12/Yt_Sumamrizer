@@ -1,4 +1,4 @@
-# 🎬 Merlin AI Video Assistant
+# 🎬 Aarif's AI Video Assistant
 
 A classic, professional offline video analysis assistant that transforms YouTube videos into structured, comprehensive summaries using state-of-the-art AI models.
 
