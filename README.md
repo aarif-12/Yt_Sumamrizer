@@ -4,8 +4,8 @@ A classic, professional offline video analysis assistant that transforms YouTube
 
 ## ✨ Features
 
-- **🔌 Fully Offline Operation** - No external API calls required
-- **🧠 Advanced AI Summarization** - Uses facebook/bart-large-cnn for high-quality summaries
+- **🔌 Fully Online Operation** - With external API calls, Integrated YouTube Transcript API and Whisper for transcript extraction
+- **🧠 Advanced AI Summarization** - Uses GPT 4o for high-quality summaries and facebook/bart-large-cnn as a fallback model
 - **📊 Structured Output** - Abstract, Key Insights, FAQs, and Hidden Gems
 - **💾 Memory Optimized** - Designed for 8GB RAM systems
 - **🎨 Professional UI** - Clean, modern Streamlit interface
